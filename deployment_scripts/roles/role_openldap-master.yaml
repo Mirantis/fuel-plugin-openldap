@@ -1,4 +1,8 @@
 meta:
+  description: "OpneLDAP master server"
+  has_primary: false
+  name: OpenLDAP master node
+  is_critical: true
   conflicts:
   - compute
   - controller
@@ -7,12 +11,11 @@ meta:
   - ceph-osd
   - mongo
   - base-os
-  description: Installs OpneLDAP master server.
   restrictions:
-      - condition: "not (settings:openldap.metadata.enabled == true)"
+  - condition: "not (settings:openldap.metadata.enabled == true)"
+    action: hide
   limits:
     max: 1
-  name: openldap-master
 name: openldap-master
 volumes_roles_mapping:
 - allocate_size: min

@@ -3,6 +3,7 @@ meta:
   has_primary: false
   name: OpenLDAP master node
   is_critical: true
+  public_ip_required: true
   conflicts:
   - compute
   - controller

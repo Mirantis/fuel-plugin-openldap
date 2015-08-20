@@ -1,4 +1,6 @@
-class plugin_sscc_openldap::slave::keystone_params {
+class openldap::slave::keystone_params {
+
+  notice('MODULAR: openldap/slave/keystone_params.pp')
 
   $workloads_collector_hash=hiera('workloads_collector')
   $workloads_collector_user=$workloads_collector_hash['username']

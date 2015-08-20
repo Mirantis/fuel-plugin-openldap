@@ -1,6 +1,6 @@
 attributes:
   ol-domain_name:
-    value: "example.com"
+    value: "domain.tld"
     label: "Domain name"
     weight: 10
     type: "text"
@@ -8,7 +8,7 @@ attributes:
       source: '\S'
       error: "Username field cannot be empty"
   ol-user_password:
-    value: "password"
+    value: "very_strong_password"
     label: "OpneLDAP password"
     weight: 15
     type: "password"
@@ -28,7 +28,7 @@ attributes:
     value: ""
     label: "ldap server certificate"
     weight: 30
-    description: "You can use generated cert for ldap server.(PLEASE USE PUBLIC IP assigned to master node as CommonName when creting csr)."
+    description: "You can use generated cert for ldap server.(PLEASE USE PUBLIC IP assigned to master node as CommonName when creating csr)."
     type: "text"
     regex:
       source: '\S'
@@ -47,11 +47,11 @@ attributes:
     weight: 35
     value: true
     label: "This is the first master"
-    description: "Please select if this is the first installation and or you plan to use single master. If this is not the first master uncheck this option and specify IPs of remote masters below"
+    description: "if this is the first installation and or you plan to use single master - Please check. Otherwise uncheck it and specify IPs of remote masters below."
   ol-remote_master_fqdn:
     value: ""
     label: "Remote master servers"
-    description: "If you have opeldap master servers deployed eralier with this plugin, please provide ther fqdn here.Use comma as a delimiter."
+    description: "If you have opeldap master servers deployed eralier with this plugin, please provide their fqdn here. Use comma as a delimiter."
     weight: 40
     type: "text"
     regex:

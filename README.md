@@ -8,8 +8,8 @@ Requirements
 
 Limitations
 -----------
-It is required to update openldap master node deployment settings via cli in order to configure networking properly (additional script which doing so shipped with plugin) 
-Only Identity stored in LDAP    
+It is required to update openldap master node deployment settings via cli in order to configure networking properly (additional script which doing so shipped with plugin)
+Only Identity stored in LDAP
 
 
 Additional info

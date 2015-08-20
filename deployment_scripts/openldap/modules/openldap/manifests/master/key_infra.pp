@@ -1,10 +1,12 @@
-class plugin_sscc_openldap::master::key_infra(
-$cacert=undef,
-$slapdkey=undef,
-$slapdcert=undef,
-$master_fqdn=undef,
-){
+class openldap::master::key_infra(
 
+  notice('MODULAR: openldap/master/key_infra.pp')
+
+  $cacert=undef,
+  $slapdkey=undef,
+  $slapdcert=undef,
+  $master_fqdn=undef,
+  ){
     file {'/etc/ldap/ssl':
       ensure => directory,
       owner => 'root',
@@ -43,5 +45,4 @@ $master_fqdn=undef,
     }
     ~>
     exec { '/usr/sbin/update-ca-certificates': }
-
 }

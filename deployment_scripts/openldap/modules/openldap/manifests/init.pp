@@ -15,4 +15,8 @@
 #
 
 
-class plugin_sscc_openldap {}
+class openldap {
+
+  notice('MODULAR: openldap/init.pp')
+
+}

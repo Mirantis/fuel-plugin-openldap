@@ -1,4 +1,7 @@
-class plugin_sscc_openldap::firewall (
+class openldap::firewall (
+
+  notice('MODULAR: openldap/firewall.pp')
+
   $port,
 ) {
 

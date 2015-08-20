@@ -7,7 +7,9 @@ meta:
   - ceph-osd
   - mongo
   - base-os
-  description: Installes OpneLDAP master server. Has to be deployed on dedicated node
+  description: Installs OpneLDAP master server.
+  restrictions:
+      - condition: "not (settings:openldap.metadata.enabled == true)"
   limits:
     max: 1
   name: openldap-master

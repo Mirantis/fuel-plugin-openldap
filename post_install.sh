@@ -1,5 +1,7 @@
 #!/bin/bash
 
+FUEL_REL='2014.2.2-6.1'
+
 for ROLE in 'openldap-master'
 do
   if $(/usr/bin/fuel role --rel 2 2>/dev/null| grep -q $ROLE)
@@ -20,4 +22,4 @@ do
 done
 
 
-fuel rel --sync-deployment-tasks --dir /etc/puppet/2014.2.2-6.1/
+fuel rel --sync-deployment-tasks --dir /etc/puppet/${FUEL_REL}/

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-FUEL_REL='2014.2.2-6.1'
+FUEL='/usr/bin/fuel'
+FUEL_REL=`$FUEL rel | grep -i ubuntu | awk '{print $NF}'`
 
 for ROLE in 'openldap-master'
 do
@@ -22,4 +23,4 @@ do
 done
 
 
-fuel rel --sync-deployment-tasks --dir /etc/puppet/${FUEL_REL}/
+$FUEL rel --sync-deployment-tasks --dir /etc/puppet/${FUEL_REL}/

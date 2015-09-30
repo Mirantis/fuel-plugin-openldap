@@ -1,0 +1,59 @@
+attributes:
+  ol-domain_name:
+    value: "example.com"
+    label: "Domain name"
+    weight: 10
+    type: "text"
+    regex:
+      source: '\S'
+      error: "Username field cannot be empty"
+  ol-user_password:
+    value: "password"
+    label: "OpneLDAP password"
+    weight: 15
+    type: "password"
+    regex:
+      source: '\S'
+      error: "Password field cannot be empty"
+  ol-ca_cert:
+    value: ""
+    label: "CA cetificate"
+    weight: 25
+    description: "Copy CA certficate in pem format here."
+    type: "text"
+    regex:
+      source: '\S'
+      error: "Copy CA certficate in pem format here."
+  ol-slapd_cert:
+    value: ""
+    label: "ldap server certificate"
+    weight: 30
+    description: "You can use generated cert for ldap server.(PLEASE USE PUBLIC IP assigned to master node as CommonName when creting csr)."
+    type: "text"
+    regex:
+      source: '\S'
+      error: "Copy ldap server certficate in pem format here."
+  ol-slapd_key:
+    value: ""
+    label: "ldap server key"
+    weight: 30
+    description: "You can use generated key for ldap server."
+    type: "text"
+    regex:
+      source: '\S'
+      error: "Copy ldap server key in pem format here."
+  ol-first_cloud:
+    type: "checkbox"
+    weight: 35
+    value: true
+    label: "This is the first master"
+    description: "Please select if this is the first installation and or you plan to use single master. If this is not the first master uncheck this option and specify IPs of remote masters below"
+  ol-remote_master_fqdn:
+    value: ""
+    label: "Remote master servers"
+    description: "If you have opeldap master servers deployed eralier with this plugin, please provide ther fqdn here.Use comma as a delimiter."
+    weight: 40
+    type: "text"
+    regex:
+      source: '((([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])(,\n|,?$)|^$)'
+      error: "Specify valid FQDN"

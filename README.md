@@ -35,9 +35,9 @@ pip install -e 'git+https://github.com/sheva-serg/fuel-plugins.git#egg=fuel_plug
 
 How to create a self-signed SSL certificate
 --------
-
+```
 # openssl genrsa -des3 -out server.key 1024
-
+```
 Generating RSA private key, 1024 bit long modulus
 
 .....++++++
@@ -52,9 +52,9 @@ Verifying - Enter pass phrase for server.key:****
 
 Step 2: Generate a CSR (Certificate Signing Request)
 -------
-
+```
 # openssl req -new -key server.key -out server.csr
-
+```
 Enter pass phrase for server.key: ****
 
 You are about to be asked to enter information that will be incorporated
@@ -85,18 +85,18 @@ Email Address []:akirilochkin@mirantis.com
 
 Step 3: Remove Passphrase from Key
 -------
-
+```
 # openssl rsa -in server.key.domain.tld -out server.key
-
+```
 Enter pass phrase for server.key.domain.tld:
 
 writing RSA key
 
 Step 4: Generating a Self-Signed Certificate
 -------
-
+```
 # openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-
+```
 Signature ok
 
 subject=/C=RU/ST=Moscow/L=Moscow/O=Mirantis-IT/OU=Service/CN=domain.tld/emailAddress=akirilochkin@mirantis.com

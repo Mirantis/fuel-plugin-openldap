@@ -6,7 +6,7 @@ class openldap::slave::keystone_config (
   $ldap_user_password=undef,
 
   ){
-    include plugin_sscc_openldap::slave::keystone_params
+    include openldap::slave::keystone_params
     include keystone::params
     include neutron::params
 
@@ -32,7 +32,7 @@ class openldap::slave::keystone_config (
       owner  => 'keystone',
       group  => 'keystone',
       mode   => '0644',
-      content => template("plugin_sscc_openldap/keystone.heat.conf.tmpl.erb"),
+      content => template("openldap/keystone.heat.conf.tmpl.erb"),
     }
     ->
     package { ['python-ldap', 'python-ldappool']:
@@ -97,8 +97,8 @@ class openldap::slave::keystone_config (
       keystone_ldap_user_role { "${::fuel_settings['access']['user']}@admin":
         roles => 'admin'
       }
-      $tenant_hash = get_user_tenant_hash($::plugin_sscc_openldap::slave::keystone_params::keystone_users_hash,'services','admin')
-      create_resources(keystone_ldap_user,$::plugin_sscc_openldap::slave::keystone_params::keystone_users_hash,{'ensure' => present})
+      $tenant_hash = get_user_tenant_hash($::openldap::slave::keystone_params::keystone_users_hash,'services','admin')
+      create_resources(keystone_ldap_user,$::openldap::slave::keystone_params::keystone_users_hash,{'ensure' => present})
       create_resources(keystone_ldap_user_role,$tenant_hash)
     }
 }

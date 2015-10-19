@@ -1,4 +1,4 @@
-class plugin_sscc_openldap::openldap_slave {
+class openldap::openldap_slave {
 
   notice('MODULAR: openldap/openldap_master.pp')
 
@@ -6,7 +6,7 @@ class plugin_sscc_openldap::openldap_slave {
   $openldap_master     = filter_nodes($nodes_hash, 'role', 'openldap-master')
   $master_fqdn         = $openldap_master[0]['fqdn']
 
-  $plugin_settings     = hiera('plugin_sscc_openldap')
+  $plugin_settings     = hiera('openldap')
   $domain_name         = $plugin_settings['ol-domain_name']
   $ldap_user_password  = $plugin_settings['ol-user_password']
 
@@ -21,16 +21,16 @@ class plugin_sscc_openldap::openldap_slave {
   $basedn_tmp    = join( $domain_array, ',dc=')
   $basedn        = "dc=${basedn_tmp}"
 
-  class { 'plugin_sscc_openldap::firewall': port => '389', } ->
-  class { 'plugin_sscc_openldap::logging': } ->
-  class { 'plugin_sscc_openldap::install':
+  class { 'openldap::firewall': port => '389', } ->
+  class { 'openldap::logging': } ->
+  class { 'openldap::install':
     ldap_user_password  => $ldap_user_password,
     domain_name         => $domain_name,
   } ->
-  class { 'plugin_sscc_openldap::slave::cacert':
+  class { 'openldap::slave::cacert':
     cacert       => $cacert,
   } ->
-  class { 'plugin_sscc_openldap::slave::configure':
+  class { 'openldap::slave::configure':
     basedn             => $basedn,
     master_fqdn        => $master_fqdn,
     ldap_user_password => $ldap_user_password,
@@ -38,7 +38,7 @@ class plugin_sscc_openldap::openldap_slave {
 
   exec { '/bin/sleep 30': } ->
 
-  class { 'plugin_sscc_openldap::slave::keystone_config':
+  class { 'openldap::slave::keystone_config':
     basedn             => $basedn,
     ldap_user_password => $ldap_user_password,
   }

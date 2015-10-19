@@ -1,10 +1,10 @@
-plugin_sscc_openldap
+Plugin Openldap
 ============
 Intended to implement Openldap backend for keystone identity. Use standalone HW node for openldap master server, MOS controller nodes are slaves. See diagram Appendix-A.
 
 Requirements
 ------------
-     Plugin_sscc_openldap currently compatible only with Mirantis OpenStack 6.1
+     Plugin openldap currently compatible only with Mirantis OpenStack 7.0
 
 Limitations
 -----------

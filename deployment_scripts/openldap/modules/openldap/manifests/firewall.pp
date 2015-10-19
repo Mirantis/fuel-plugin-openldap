@@ -1,10 +1,10 @@
 class openldap::firewall (
 
-  notice('MODULAR: openldap/firewall.pp')
-
   $port,
+
 ) {
 
+  notice('MODULAR: openldap/firewall.pp')
   package { 'iptables-persistent':
     ensure => installed,
   }
@@ -16,3 +16,4 @@ class openldap::firewall (
   }
 
 }
+

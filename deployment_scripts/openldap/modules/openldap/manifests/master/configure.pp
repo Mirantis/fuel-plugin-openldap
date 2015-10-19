@@ -28,14 +28,14 @@ class openldap::master::configure (
           owner   => 'openldap',
           group   => 'openldap',
           mode    => '0640',
-          content => template("plugin_sscc_openldap/master-slapd.conf.tmpl.erb"),
+          content => template("openldap/master-slapd.conf.tmpl.erb"),
     } ->
     file {"/etc/supervisor/conf.d/slapd-master.conf":
       path    => "/etc/supervisor/conf.d/slapd-master.conf",
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template("plugin_sscc_openldap/supervisor-slapd-master.tmpl.erb"),
+      content => template("openldap/supervisor-slapd-master.tmpl.erb"),
     } ~>
     service { 'supervisor':
       provider => debian,

@@ -1,7 +1,17 @@
 # Stub task which does nothing. For actual tasks please check  deployment_scripts/tasks/tasks.yaml
-- role: '*'
-  stage: pre_deployment
-  type: shell
+
+- role: ['openldap-master']
+  stage: post_deployment/6010
+  type: puppet
   parameters:
-    cmd: echo "Plugin OK"
-    timeout: 30
+    puppet_manifest: /etc/puppet/modules/osnailyfacter/modular/openldap/manifests/openldap_master.pp
+    puppet_modules: /etc/puppet/modules/osnailyfacter/modular/openldap/modules/:/etc/puppet/modules
+    timeout: 720
+
+- role: ['primary-controller', 'controller']
+  stage: post_deployment/6020
+  type: puppet
+  parameters:
+    puppet_manifest: /etc/puppet/modules/osnailyfacter/modular/openldap/manifests/controller.pp
+    puppet_modules: /etc/puppet/modules/osnailyfacter/modular/openldap/modules/:/etc/puppet/modules
+    timeout: 720

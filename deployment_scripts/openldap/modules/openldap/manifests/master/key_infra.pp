@@ -19,7 +19,7 @@ class openldap::master::key_infra(
       owner => 'openldap',
       group => 'openldap',
       mode   => 0644,
-      content => template("plugin_sscc_openldap/cacert.pem.tmpl.erb")
+      content => template("openldap/cacert.pem.tmpl.erb")
     }
     ->
     file {'/etc/ldap/ssl/slapd_key.pem':
@@ -27,7 +27,7 @@ class openldap::master::key_infra(
       owner => 'openldap',
       group => 'openldap',
       mode   => 0600,
-      content => template("plugin_sscc_openldap/slapd_key.pem.tmpl.erb")
+      content => template("openldap/slapd_key.pem.tmpl.erb")
     }
     ->
     file {'/etc/ldap/ssl/slapd_cert.pem':
@@ -35,13 +35,13 @@ class openldap::master::key_infra(
       owner => 'openldap',
       group => 'openldap',
       mode   => 0644,
-      content => template("plugin_sscc_openldap/slapd_cert.pem.tmpl.erb")
+      content => template("openldap/slapd_cert.pem.tmpl.erb")
     }
     ->
     file {'/usr/local/share/ca-certificates/cacert.crt':
       ensure => file,
       mode   => 0644,
-      content => template("plugin_sscc_openldap/cacert.pem.tmpl.erb")
+      content => template("openldap/cacert.pem.tmpl.erb")
     }
     ~>
     exec { '/usr/sbin/update-ca-certificates': }

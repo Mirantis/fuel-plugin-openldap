@@ -9,7 +9,7 @@ class openldap::logging (
     File["${rsyslog::params::rsyslog_d}${log_conf}"] ~> Service["${rsyslog::params::service_name}"]
 
     file { "${rsyslog::params::rsyslog_d}${log_conf}":
-      content => template("plugin_sscc_openldap/rsyslog-slapd.conf.tmpl.erb"),
+      content => template("openldap/rsyslog-slapd.conf.tmpl.erb"),
       owner  => 'syslog',
       group  => 'syslog',
       notify => Service['syslog-service'],

@@ -12,7 +12,7 @@ class openldap::install (
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
-      content => template("plugin_sscc_openldap/slapd.preseed.erb"),
+      content => template("openldap/slapd.preseed.erb"),
     } ->
     package { 'slapd':
       ensure       => present,

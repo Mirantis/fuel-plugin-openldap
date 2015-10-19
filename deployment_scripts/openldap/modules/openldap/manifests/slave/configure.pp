@@ -30,7 +30,7 @@ class openldap::slave::configure (
           owner   => 'openldap',
           group   => 'openldap',
           mode    => '0640',
-          content => template("plugin_sscc_openldap/slave-slapd.conf.tmpl.erb"),
+          content => template("openldap/slave-slapd.conf.tmpl.erb"),
     }
     ->
     file {"/etc/supervisor/conf.d/slapd-slave.conf":
@@ -38,7 +38,7 @@ class openldap::slave::configure (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template("plugin_sscc_openldap/supervisor-slapd-slave.tmpl.erb"),
+      content => template("openldap/supervisor-slapd-slave.tmpl.erb"),
     }
     ~>
     service { 'supervisor':

@@ -15,12 +15,12 @@ class openldap::slave::cacert (
     owner => 'root',
     group => 'root',
     mode   => 0644,
-    content => template("plugin_sscc_openldap/cacert.pem.tmpl.erb")
+    content => template("openldap/cacert.pem.tmpl.erb")
   } ->
   file {'/usr/local/share/ca-certificates/cacert.crt':
     ensure => file,
     mode   => 0644,
-    content => template("plugin_sscc_openldap/cacert.pem.tmpl.erb")
+    content => template("openldap/cacert.pem.tmpl.erb")
   } ~>
   exec { '/usr/sbin/update-ca-certificates': }
 }

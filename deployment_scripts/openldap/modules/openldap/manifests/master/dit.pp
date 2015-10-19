@@ -1,11 +1,11 @@
 class openldap::master::dit (
 
-  notice('MODULAR: openldap/master/dit.pp')
-
   $master_fqdn=undef,
   $basedn=undef,
   $ldap_user_password=undef,
   ){
+
+    notice('MODULAR: openldap/master/dit.pp')
     ldapdn{ "ou Users":
       dn => "ou=Users,${basedn}",
       attributes => [ "ou: Users", "objectClass: top",

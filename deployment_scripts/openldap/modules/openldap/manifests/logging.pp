@@ -1,9 +1,7 @@
 class openldap::logging (
-
-  notice('MODULAR: openldap/logging.pp')
-
   $log_conf = '88-slapd.conf',
-    ){
+  ){
+    notice('MODULAR: openldap/logging.pp')
     include ::rsyslog::params
 
     File["${rsyslog::params::rsyslog_d}${log_conf}"] ~> Service["${rsyslog::params::service_name}"]

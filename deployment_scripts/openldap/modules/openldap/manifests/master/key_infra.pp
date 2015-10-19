@@ -1,13 +1,14 @@
 class openldap::master::key_infra(
 
-  notice('MODULAR: openldap/master/key_infra.pp')
-
   $cacert=undef,
   $slapdkey=undef,
   $slapdcert=undef,
   $master_fqdn=undef,
   ){
-    file {'/etc/ldap/ssl':
+
+     notice('MODULAR: openldap/master/key_infra.pp')
+
+     file {'/etc/ldap/ssl':
       ensure => directory,
       owner => 'root',
       group => 'root',

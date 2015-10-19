@@ -1,12 +1,12 @@
 class openldap::master::configure (
 
-  notice('MODULAR: openldap/master/configure.pp')
-
   $master_server_id=undef,
   $basedn=undef,
   $ldap_user_password=undef,
   $ldap_remote_master_fqdn=undef,
   ){
+
+    notice('MODULAR: openldap/master/configure.pp')
 
     package { 'supervisor':
       ensure       => installed,

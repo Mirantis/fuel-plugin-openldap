@@ -1,9 +1,7 @@
 class openldap::slave::cacert (
-
-  notice('MODULAR: openldap/slave/cacert.pp')
-
   $cacert,
 ){
+  notice('MODULAR: openldap/slave/cacert.pp')
   file {'/etc/ldap/ssl':
     ensure => directory,
     owner => 'root',

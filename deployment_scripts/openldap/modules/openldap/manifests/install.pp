@@ -1,12 +1,10 @@
 class openldap::install (
-
-  notice('MODULAR: openldap/install.pp')
-
   $domain_name=undef,
   $ldap_user_password=undef,
-
 ){
-    $responsefile="/var/cache/debconf/slapd.preseed"
+  notice('MODULAR: openldap/install.pp')
+  $responsefile="/var/cache/debconf/slapd.preseed"
+
     file { "${responsefile}":
       ensure  => file,
       mode    => '0644',

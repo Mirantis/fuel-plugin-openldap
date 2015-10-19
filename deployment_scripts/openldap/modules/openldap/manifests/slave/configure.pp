@@ -1,11 +1,9 @@
 class openldap::slave::configure (
-
-  notice('MODULAR: openldap/slave/configure.pp')
-
   $basedn=undef,
   $master_fqdn=undef,
   $ldap_user_password=undef,
   ){
+    notice('MODULAR: openldap/slave/configure.pp')
     package { 'supervisor':
       ensure       => installed,
     }

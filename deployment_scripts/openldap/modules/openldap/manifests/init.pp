@@ -16,7 +16,5 @@
 
 
 class openldap {
-
   notice('MODULAR: openldap/init.pp')
-
 }

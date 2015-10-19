@@ -1,11 +1,8 @@
 class openldap::slave::keystone_config (
-
-  notice('MODULAR: openldap/slave/keystone_config.pp')
-
   $basedn=undef,
   $ldap_user_password=undef,
-
   ){
+    notice('MODULAR: openldap/slave/keystone_config.pp')
     include openldap::slave::keystone_params
     include keystone::params
     include neutron::params

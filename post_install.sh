@@ -20,6 +20,16 @@ function create_roles {
       fi
   done
 }
+function set_min_controller_count {
+  count=$1
+  workdir=$(mktemp -d /tmp/modifyenv.XXXX)
+  $FUEL role --rel $REL --role controller --file $workdir/controller.yaml
+  sed -i "s/    min: ./    min: ${count}/" $workdir/controller.yaml
+  $FUEL role --rel $REL --update --file $workdir/controller.yaml
+  rm -rf $workdir
+}
+
+set_min_controller_count 0
 
 create_roles
 cp -a ${DIR}/deployment_scripts/openldap /etc/puppet/$FUEL_REL/modules/osnailyfacter/modular/

@@ -10,7 +10,8 @@ meta:
   description: Installs OpneLDAP master server.
   public_is_required: true
   restrictions:
-      - condition: "not (settings:openldap.metadata.enabled == true)"
+    - condition: "not (settings:openldap.metadata.enabled == true)"
+      action: hide
   limits:
     max: 1
   name: openldap-master

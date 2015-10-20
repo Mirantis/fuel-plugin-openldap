@@ -86,16 +86,16 @@ class openldap::slave::keystone_config (
       keystone_role { 'heat_stack_user':
         ensure => present,
       }
-      keystone_ldap_user { $::fuel_settings['access']['user']:
+      keystone_user { $::fuel_settings['access']['user']:
         password => $::fuel_settings['access']['password'],
         email => "admin@local",
         enabled => true,
       }
-      keystone_ldap_user_role { "${::fuel_settings['access']['user']}@admin":
+      keystone_user_role { "${::fuel_settings['access']['user']}@admin":
         roles => 'admin'
       }
       $tenant_hash = get_user_tenant_hash($::openldap::slave::keystone_params::keystone_users_hash,'services','admin')
-      create_resources(keystone_ldap_user,$::openldap::slave::keystone_params::keystone_users_hash,{'ensure' => present})
-      create_resources(keystone_ldap_user_role,$tenant_hash)
+      create_resources(keystone_user,$::openldap::slave::keystone_params::keystone_users_hash,{'ensure' => present})
+      create_resources(keystone_user_role,$tenant_hash)
     }
 }

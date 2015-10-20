@@ -12,8 +12,6 @@ meta:
   restrictions:
     - condition: "not (settings:openldap.metadata.enabled == true)"
       action: hide
-  limits:
-    max: 1
   name: openldap-master
 name: openldap-master
 volumes_roles_mapping:

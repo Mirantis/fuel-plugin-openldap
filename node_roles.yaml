@@ -1,0 +1,14 @@
+openldap:
+  has_primary: true
+  public_ip_required: true
+  weight: 1000
+  conflicts:
+  - compute
+  - controller
+  - cinder
+  - cinder-vmware
+  - ceph-osd
+  - mongo
+  - base-os
+  description: "Installs OpenLDAP master server."
+  name: "Openldap master"

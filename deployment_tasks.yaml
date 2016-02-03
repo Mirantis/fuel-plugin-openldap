@@ -1,0 +1,39 @@
+- id: primary-openldap
+  type: group
+  role: [primary-openldap]
+  requires: [mongo]
+  required_for: [openldap]
+  tasks: [firewall,hiera,tools,netconfig,connectivity_tests,globals,fuel_pkgs,logging,hosts]
+  parameters:
+    strategy:
+      type: one_by_one
+
+- id: openldap
+  type: group
+  role: [openldap]
+  requires: [primary-openldap]
+  required_for: [primary-controller]
+  tasks: [firewall,hiera,tools,netconfig,connectivity_tests,globals,fuel_pkgs,logging,hosts]
+  parameters:
+    strategy:
+      type: parallel
+
+- id: openldap-master
+  type: puppet
+  groups: [primary-openldap]
+  requires: [hosts]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: 'openldap_master.pp'
+    puppet_modules: 'modules/:/etc/puppet/modules'
+    timeout: 720
+
+- id: openldap-slave
+  type: puppet
+  groups: [controller, primary-controller]
+  requires: [keystone]
+  required_for: [openstack-cinder]
+  parameters:
+    puppet_manifest: 'openldap_slave.pp'
+    puppet_modules: 'modules/:/etc/puppet/modules'
+    timeout: 720

@@ -1,3 +1,4 @@
+# PUPPET AUTO GENERATED
 #
 # This file should NOT be world readable.
 #
@@ -40,6 +41,11 @@ moduleload	back_ldap.la
 moduleload	back_monitor.la
 moduleload	syncprov.la
 moduleload	accesslog.la
+moduleload      back_bdb.la
+moduleload      back_meta.la
+moduleload      back_mdb.la
+moduleload      pcache.la
+moduleload      rwm.la
 
 
 # The maximum number of entries that is returned for a search operation
@@ -49,7 +55,7 @@ sizelimit 500000
 # for indexing.
 tool-threads 2
 
-
+<%- if not @ldap_cache %>
 #######################################################################
 #Chaining configuration
 
@@ -63,34 +69,25 @@ chain-tls                  start
                            tls_cacert="/etc/ldap/ssl/cacert.pem"
 chain-return-error         TRUE
 
-
+<% end %>
 #######################################################################
 # Database specific directives apply to this databasse until another
 # 'database' directive occurs
 
 database        hdb
-
 # The base of your directory in database #1
 suffix          "<%= @basedn %>"
-
-# rootdn directive for specifying a superuser on the database. This is needed
-# for syncrepl.
 rootdn          "cn=admin,<%= @basedn %>"
 rootpw          "<%= @ldap_user_password %>"
-
-
-# Where the database file are physically stored for database #1
 directory       "/var/lib/ldap"
 
 # The dbconfig settings are used to generate a DB_CONFIG file the first
 # time slapd starts.  They do NOT override existing an existing DB_CONFIG
 # file.  You should therefore change these settings in DB_CONFIG directly
 # or remove DB_CONFIG and restart slapd for changes to take effect.
-
 # For the Debian package we use 2MB as default but be sure to update this
 # value if you have plenty of RAM
 dbconfig set_cachesize 0 805306368 0
-
 # transaction log buffer size
 dbconfig set_lg_bsize 6553600
 # Number of objects that can be locked at the same time.
@@ -101,8 +98,6 @@ dbconfig set_lk_max_locks 5000
 dbconfig set_lk_max_lockers 5000
 dbconfig set_lg_max 26214400
 dbconfig set_flags DB_LOG_AUTOREMOVE
-
-
 #The dbnosync directive specifies that the database does NOT need to be updated immediately with any in-memory records. 
 #This option will increase performance on writes but has the disadvantage that if there is a system failure before the disk and memory are re-synchronised then data may be lost.
 #The memory and disk are re-synchronised using the checkpoint directive.
@@ -110,23 +105,16 @@ dbnosync
 
 #how many records to cache
 cachesize 20000
-
 idlcachesize    10000
-
 # Indexing options for database #1
-index default pres,eq
-index objectClass eq
-index cn,uid,sn,mail pres,eq,sub
-index contextCSN,entryUUID,member eq
-
-
+<%- @hdb_index_params.each do |param| -%>
+<%= param %>
+<%- end -%>
 # Save the time that the entry gets modified, for database #1
 lastmod         on
-
 # Checkpoint the BerkeleyDB database periodically in case of system
 # failure and to speed slapd shutdown.
 checkpoint      128 15
-
 # The userPassword by default can be changed
 # by the entry owning it if they are authenticated.
 # Others should not be able to see it, except the
@@ -136,7 +124,6 @@ access to attrs=userPassword,shadowLastChange
         by anonymous auth
         by self write
         by * none
-
 # Ensure read access to the base for things like
 # supportedSASLMechanisms.  Without this you may
 # have problems with SASL not knowing what
@@ -147,14 +134,13 @@ access to attrs=userPassword,shadowLastChange
 # want SASL (and possible other things) to work 
 # happily.
 access to dn.base="" by * read
-
 # The admin dn has full write access, everyone else
 # can read everything.
 access to *
         by users read
         by * none
 
-
+<%- if not @ldap_cache %>
 syncrepl rid=000
         provider=ldap://<%= @master_fqdn %>
         type=refreshAndPersist
@@ -170,6 +156,7 @@ syncrepl rid=000
 
 # Refer updates to the master
 updateref               ldap://<%= @master_fqdn %>
+<%- end %>
 
 ##############################################################################
 ###  Monitor database can be used to get service status        ###############
@@ -179,3 +166,40 @@ access to *
     by dn.exact="gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth" read
         by dn.exact="cn=admin,<%= @basedn %>" read
         by * none
+
+<%- if @ldap_cache %>
+database        meta
+suffix          "<%= @cache_suffix %>"
+rootdn         "cn=admin,<%= @cache_suffix %>"
+rootpw          <%= @ldap_user_password %>
+
+uri            "<%= @upstream_proto %>://<%= @upstream_host %>/<%= @cache_suffix %>"
+  <%- if @use_tls -%>
+tls start
+  <%- end -%>
+lastmod off
+  <%- if @suffix_massage != '' -%>
+suffixmassage "<%= @cache_suffix %>" "<%= @suffix_massage %>"
+  <%- end -%>
+idassert-bind bindmethod=simple
+ binddn="<%= @binddn %>"
+ credentials=<%= @bind_password %>
+ mode=self
+  <%- if @use_tls -%>
+ tls_reqcert=demand
+ starttls="yes"
+ tls_cacert=/etc/ldap/ssl/cacert.pem
+  <%- end -%>
+
+overlay                         pcache
+pcache                          hdb 2500 3 1 300
+
+  <%- @cache_attrs.each do |param| -%>
+<%= param %>
+  <%- end %>
+cachesize                       2000
+directory                       /var/lib/ldap/ldap-cache
+  <%- @chahe_index_params.each do |param| -%>
+<%= param %>
+  <%- end -%>
+<%- end -%>

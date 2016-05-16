@@ -1,0 +1,8 @@
+#!/bin/bash
+piddir=/var/run/slapd
+if [ ! -d "$piddir" ]; then
+        mkdir -p "$piddir"
+        [ -z "openldap" ] || chown -R "openldap" "$piddir"
+        [ -z "openldap" ] || chgrp -R "openldap" "$piddir"
+fi
+exec /usr/sbin/slapd -d0 -g openldap -u openldap -f /etc/ldap/slapd.conf -h "ldap://127.0.0.1 ldapi:///"

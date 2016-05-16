@@ -30,6 +30,13 @@ class openldap::master::configure (
           mode    => '0640',
           content => template("openldap/master-slapd.conf.tmpl.erb"),
     } ->
+    file {'/etc/supervisor/slapd.sh':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template("openldap/slapd-master.sh.tmpl.erb"),
+      notify  => Service['supervisor']
+    } ->
     file {"/etc/supervisor/conf.d/slapd-master.conf":
       path    => "/etc/supervisor/conf.d/slapd-master.conf",
       owner   => 'root',

@@ -60,6 +60,13 @@ class openldap::slave::configure (
       }
     }
 
+    file {'/etc/supervisor/slapd.sh':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template("openldap/slapd-slave.sh.tmpl.erb"),
+      notify  => Service['supervisor']
+    } ->
     file {"/etc/supervisor/conf.d/slapd-slave.conf":
       path    => "/etc/supervisor/conf.d/slapd-slave.conf",
       owner   => 'root',

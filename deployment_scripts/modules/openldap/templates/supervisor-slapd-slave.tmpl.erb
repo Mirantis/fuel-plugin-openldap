@@ -1,5 +1,5 @@
 [program:slapd-slave]
-command=/usr/sbin/slapd -d0 -g openldap -u openldap -f /etc/ldap/slapd.conf -h "ldap://127.0.0.1 ldapi:///"
+command=/etc/supervisor/slapd.sh
 numprocs=1
 numprocs_start=0
 priority=30

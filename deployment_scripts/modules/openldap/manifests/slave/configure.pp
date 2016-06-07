@@ -65,7 +65,8 @@ class openldap::slave::configure (
       group   => 'root',
       mode    => '0755',
       content => template("openldap/slapd-slave.sh.tmpl.erb"),
-      notify  => Service['supervisor']
+      notify  => Service['supervisor'],
+      require => Package['supervisor'],
     } ->
     file {"/etc/supervisor/conf.d/slapd-slave.conf":
       path    => "/etc/supervisor/conf.d/slapd-slave.conf",
